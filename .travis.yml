@@ -1,0 +1,15 @@
+language: node_js
+node_js:
+  - 15
+dist: trusty
+services:
+  - mongodb
+env:
+  secure:
+cache:
+  directories:
+    - node_modules
+install:
+  - yarn install
+script:
+  - yarn test
