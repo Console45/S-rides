@@ -32,4 +32,4 @@ const Ticket = model<ITicket>("Tickets", ticketSchema);
 export const TICKET_MODEL_TOKEN = new Token<ITicketModel>("ticket.model");
 Container.set(TICKET_MODEL_TOKEN, Ticket);
 
-// export default Currency;
+export default Ticket;
