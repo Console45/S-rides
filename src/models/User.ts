@@ -127,7 +127,7 @@ userSchema.pre<IUser>(
   }
 );
 
-const User = model<IUser, IUserModel>("User", userSchema);
+const User = model<IUser, IUserModel>("Users", userSchema);
 
 export const USER_MODEL_TOKEN = new Token<IUserModel>("user.model");
 Container.set(USER_MODEL_TOKEN, User);
