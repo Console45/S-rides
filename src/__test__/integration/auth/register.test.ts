@@ -7,10 +7,10 @@ const registerUrl: string = "/auth/register";
 
 describe(registerUrl, () => {
   const testUser = {
-    name: "test user",
+    fullname: "test user",
     email: "testuser@test.com",
     password: "testpassword",
-    role: "User",
+    studentId: "10817438",
   };
   beforeEach(async () => {
     await User.deleteMany({});
@@ -30,7 +30,7 @@ describe(registerUrl, () => {
   it(`should return 400 on malformed data with POST ${registerUrl}`, async () => {
     const response = await request
       .post(registerUrl)
-      .send({ name: testUser.name, email: testUser.email });
+      .send({ fullname: testUser.fullname, email: testUser.email });
     expect(response.status).toBe(400);
     expect(response.body).toHaveProperty("status", "error");
   });

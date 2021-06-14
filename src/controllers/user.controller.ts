@@ -1,27 +1,13 @@
 import { userServiceInstance } from "./../services/user";
-import { NextFunction, Response, Request } from "express";
+import { NextFunction, Response } from "express";
 import { auth } from "../middlewares/auth";
-import { ValidationFields, Allow } from "../constants/constant";
-import {
-  editPasswordSchema,
-  editPhoneSchema,
-  editProfileSchema,
-  getUsersSchema,
-} from "./../validators/schema/user";
-import {
-  allow,
-  controller,
-  get,
-  patch,
-  post,
-  use,
-  validate,
-} from "../decorators";
+import { ValidationFields } from "../constants/constant";
+import { editPasswordSchema } from "./../validators/schema/user";
+import { controller, get, patch, use, validate } from "../decorators";
 @controller("/users")
 class UserController {
   @get("/me")
   @use(auth)
-  @allow(Allow.User)
   async handleGetProfile(req: any, res: Response, next: NextFunction) {
     try {
       const user = req.user;
@@ -38,7 +24,6 @@ class UserController {
   @patch("/me/edit_password")
   @validate({ schema: editPasswordSchema, field: ValidationFields.BODY })
   @use(auth)
-  @allow(Allow.User)
   async handleEditPassword(req: any, res: Response, next: NextFunction) {
     try {
       const user = await userServiceInstance.editPassword(
@@ -47,7 +32,7 @@ class UserController {
       );
       res.json({
         status: "success",
-        message: `${user.role} password update is successful`,
+        message: `Password update is successful`,
         data: { update: { error: false, user } },
       });
     } catch (err) {

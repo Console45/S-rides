@@ -14,7 +14,6 @@ class AuthController {
       const user = await authServiceInstance.registerUser(req.body);
       res.status(201).json({
         status: "success",
-        message: `${user.role} registration is successful`,
         data: {
           user,
         },
@@ -31,7 +30,6 @@ class AuthController {
       const user = await authServiceInstance.loginUser(req.body);
       res.json({
         status: "success",
-        message: `${user.role} login is successful`,
         data: {
           user,
         },

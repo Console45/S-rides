@@ -1,10 +1,10 @@
 import { ITicket, ITicketModel } from "./../@types/models/ticket";
-import { Model, model, Schema } from "mongoose";
+import { model, Schema } from "mongoose";
 import { Token, Container } from "typedi";
 
 const ticketSchema: Schema<ITicket> = new Schema(
   {
-    busName: { type: String, required: true },
+    bus: { type: String, required: true },
     ticketId: { type: String, required: true },
     status: {
       type: String,

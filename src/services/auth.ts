@@ -47,14 +47,26 @@ class AuthServices {
    * @returns user
    */
   public async registerUser(body: UserDetails): Promise<IUser> {
-    const existingUser: IUser | null = await this._userModel.findOne({
+    const existingUserWithEmail: IUser | null = await this._userModel.findOne({
       email: body.email,
     });
-    if (existingUser) {
+    if (existingUserWithEmail) {
       this._errorMessage = `User already exists`;
       authLogger.error(`message:${this._errorMessage},email:${body.email},`);
       throw new ApiError(409, this._errorMessage);
     }
+    const existingUserWithID: IUser | null = await this._userModel.findOne({
+      studentId: body.studentId,
+    });
+
+    if (existingUserWithID) {
+      this._errorMessage = `User already exists`;
+      authLogger.error(
+        `message:${this._errorMessage},studentId:${body.studentId},`
+      );
+      throw new ApiError(409, this._errorMessage);
+    }
+
     const user: IUser = new this._userModel(body);
     await user.save();
     eventEmitter.emit(Events.LOGIN_USER, {
@@ -62,7 +74,7 @@ class AuthServices {
       accessToken: user.createAccessToken("15m"),
     });
     authLogger.info(
-      `message:${user.role} registeration was sucessful,email:${user.email},name:${user.fullname}`
+      `message: registeration was sucessful,email:${user.email},name:${user.fullname}`
     );
     return user;
   }
@@ -70,7 +82,6 @@ class AuthServices {
   /**
    * logs in an existing user
    * @param body user data
-   * @param role user role
    * @returns user
    */
   public async loginUser(body: {
@@ -86,7 +97,7 @@ class AuthServices {
       accessToken: user.createAccessToken("15m"),
     });
     authLogger.info(
-      `message:${user.role} login was sucessful,email:${user.email},name:${user.fullname}`
+      `message: login was sucessful,email:${user.email},name:${user.fullname}`
     );
     return user;
   }
@@ -138,6 +149,7 @@ class AuthServices {
    */
   public async checkAuth(accessToken: string): Promise<IUser> {
     const payload: any = verify(accessToken, keys.JWT_ACCESS_TOKEN_SECRET);
+    console.log(payload);
     const user: IUser | null = await this._userModel.findOne({
       _id: payload.userId,
     });
@@ -168,6 +180,8 @@ class AuthServices {
       AuthServices._res.cookie("jid", refreshToken, {
         httpOnly: true,
         path: "/auth/refresh_token",
+        sameSite: "none",
+        secure: true,
       });
       httpLogger.http("Refresh Token Sent");
       AuthServices._res.cookie("atk", accessToken, {

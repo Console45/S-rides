@@ -8,6 +8,6 @@ export const registerSchema: ObjectSchema = Joi.object().keys({
 });
 
 export const loginSchema: ObjectSchema = Joi.object().keys({
-  studentId: Joi.string().email().required(),
+  studentId: Joi.string().required(),
   password: Joi.string().min(6).required(),
 });

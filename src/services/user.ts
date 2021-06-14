@@ -35,7 +35,7 @@ class UserService {
     }
     user.password = passwords.new_password;
     await user.save();
-    userLogger.info(`${user.role} password edited successfully`);
+    userLogger.info(`password edited successfully`);
     return user;
   }
 }

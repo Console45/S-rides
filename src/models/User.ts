@@ -6,6 +6,7 @@ import { sign } from "jsonwebtoken";
 import keys from "../constants/keys";
 import { authLogger, UnAuthorizedRequest } from "../utils";
 import { IUser, IUserModel } from "../@types";
+import Ticket from "./Ticket";
 
 const userSchema: Schema<IUser> = new Schema<IUser>(
   {
@@ -19,7 +20,7 @@ const userSchema: Schema<IUser> = new Schema<IUser>(
         if (!validator.isEmail(value)) throw new Error("not an email");
       },
     },
-    Tickets: [{ ticket: { type: SchemaTypes.ObjectId, ref: Ticket } }],
+    tickets: [{ ticket: { type: SchemaTypes.ObjectId, ref: Ticket } }],
     studentId: {
       type: String,
       required: true,
@@ -105,18 +106,6 @@ userSchema.methods.createRefreshToken = function (this: IUser): string {
     { expiresIn: "7d" }
   );
   return refreshToken;
-};
-
-userSchema.methods.createResetPasswordToken = function (this: IUser): string {
-  const resetPasswordToken: string = sign(
-    {
-      userId: this._id.toString(),
-      tokenVersion: this.resetPasswordTokenVersion,
-    },
-    keys.RESET_PASSWORD_TOKEN_SECRET,
-    { expiresIn: "30m" }
-  );
-  return resetPasswordToken;
 };
 
 userSchema.pre<IUser>(

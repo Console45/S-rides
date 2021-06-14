@@ -8,6 +8,7 @@ export const auth = async (
   next: NextFunction
 ): Promise<void> => {
   try {
+    console.log(req.cookies);
     const user = await authServiceInstance.checkAuth(req.cookies.atk);
     req.user = user;
     next();

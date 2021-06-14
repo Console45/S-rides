@@ -2,7 +2,7 @@ export interface UserDetails {
   name: string;
   email: string;
   password: string;
-  role: string;
+  studentId: string;
 }
 
 export interface AuthTokens {
