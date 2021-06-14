@@ -39,4 +39,20 @@ class UserController {
       next(err);
     }
   }
+
+  @get("/tickets")
+  @use(auth)
+  async handleGetUsersTickets(req: any, res: Response, next: NextFunction) {
+    try {
+      await userServiceInstance.getUserTickets(req.user);
+      res.json({
+        status: "success",
+        data: {
+          tickets: req.user.tickets,
+        },
+      });
+    } catch (err) {
+      next(err);
+    }
+  }
 }

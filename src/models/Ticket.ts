@@ -1,6 +1,7 @@
 import { ITicket, ITicketModel } from "./../@types/models/ticket";
-import { model, Schema } from "mongoose";
+import { model, Schema, SchemaTypes } from "mongoose";
 import { Token, Container } from "typedi";
+import User from "./User";
 
 const ticketSchema: Schema<ITicket> = new Schema(
   {
@@ -15,7 +16,7 @@ const ticketSchema: Schema<ITicket> = new Schema(
     seatNo: { type: String, required: true },
     from: { type: String, required: true },
     to: { type: String, required: true },
-    userName: { type: String, required: true },
+    user: { ref: User, type: SchemaTypes.ObjectId },
   },
   { timestamps: true }
 );

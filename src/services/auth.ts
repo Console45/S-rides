@@ -180,8 +180,6 @@ class AuthServices {
       AuthServices._res.cookie("jid", refreshToken, {
         httpOnly: true,
         path: "/auth/refresh_token",
-        sameSite: "none",
-        secure: true,
       });
       httpLogger.http("Refresh Token Sent");
       AuthServices._res.cookie("atk", accessToken, {

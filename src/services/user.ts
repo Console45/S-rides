@@ -38,6 +38,19 @@ class UserService {
     userLogger.info(`password edited successfully`);
     return user;
   }
+
+  public async getUserTickets(user: IUser) {
+    await user
+      .populate({
+        path: "tickets",
+        options: {
+          sort: {
+            createdAt: -1,
+          },
+        },
+      })
+      .execPopulate();
+  }
 }
 
 export const userServiceInstance = Container.get(UserService);

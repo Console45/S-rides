@@ -1,3 +1,4 @@
+import { IUser } from "./user";
 import { Document, Model } from "mongoose";
 
 /**
@@ -17,7 +18,7 @@ export interface ITicket extends Document {
   seatNo: String;
   from: String;
   to: string;
-  userName: string;
+  user: IUser["_id"];
 }
 
 export interface ITicketModel extends Model<ITicket> {}

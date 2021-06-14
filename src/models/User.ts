@@ -20,7 +20,6 @@ const userSchema: Schema<IUser> = new Schema<IUser>(
         if (!validator.isEmail(value)) throw new Error("not an email");
       },
     },
-    tickets: [{ ticket: { type: SchemaTypes.ObjectId, ref: Ticket } }],
     studentId: {
       type: String,
       required: true,
@@ -45,6 +44,12 @@ const userSchema: Schema<IUser> = new Schema<IUser>(
     timestamps: true,
   }
 );
+
+userSchema.virtual("tickets", {
+  ref: "Tickets",
+  localField: "_id",
+  foreignField: "user",
+});
 
 userSchema.methods.toJSON = function (this: IUser): any {
   const clone: any = { ...this.toObject() };

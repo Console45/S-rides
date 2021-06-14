@@ -22,16 +22,14 @@ class TicketService {
     return `${Math.random().toString(10).substr(2, 9)}`;
   }
 
-  public async orderTicket(user: IUser, ticketDetails: any): Promise<ITicket> {
+  public async orderTicket(user: string, ticketDetails: any): Promise<ITicket> {
     const ticketId = this.generateTicketId();
     const existingTicket = await this.ticketModel.findOne({
       ticketId: ticketId,
     });
     if (existingTicket) throw new ApiError(409, "Ticket already exists");
-    const ticket = new this.ticketModel({ ticketId, ...ticketDetails });
+    const ticket = new this.ticketModel({ ticketId, ...ticketDetails, user });
     await ticket.save();
-    user.tickets.push({ ticket: ticket._id });
-    await user.save();
     return ticket;
   }
 }
