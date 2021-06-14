@@ -1,5 +1,5 @@
 import { Container, Token } from "typedi";
-import { Schema, model, HookNextFunction } from "mongoose";
+import { Schema, model, HookNextFunction, SchemaTypes } from "mongoose";
 import validator from "validator";
 import { compare, hash } from "bcrypt";
 import { sign } from "jsonwebtoken";
@@ -19,6 +19,7 @@ const userSchema: Schema<IUser> = new Schema<IUser>(
         if (!validator.isEmail(value)) throw new Error("not an email");
       },
     },
+    Tickets: [{ ticket: { type: SchemaTypes.ObjectId, ref: Ticket } }],
     studentId: {
       type: String,
       required: true,
