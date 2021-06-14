@@ -1,7 +1,7 @@
 {
-  "name": "simplecoins-backend",
+  "name": "srides-backend",
   "version": "0.0.1",
-  "description": "Simplecoins backend server",
+  "description": "Srides backend server",
   "main": "server.ts",
   "license": "MIT",
   "devDependencies": {
