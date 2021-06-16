@@ -16,6 +16,7 @@ class AuthController {
         status: "success",
         data: {
           user,
+          accessToken: user.createAccessToken(),
         },
       });
     } catch (err) {
@@ -32,21 +33,8 @@ class AuthController {
         status: "success",
         data: {
           user,
+          accessToken: user.createAccessToken(),
         },
-      });
-    } catch (err) {
-      next(err);
-    }
-  }
-
-  @post("/refresh_token")
-  async handleRefreshToken(req: any, res: Response, next: NextFunction) {
-    try {
-      await authServiceInstance.refreshToken(req.cookies.jid);
-      res.json({
-        status: "success",
-        message: "Access token refresh is successful",
-        data: null,
       });
     } catch (err) {
       next(err);
@@ -57,11 +45,12 @@ class AuthController {
   @use(auth)
   async handleLogout(_: any, res: Response, next: NextFunction) {
     try {
-      authServiceInstance.logoutUser();
       res.json({
         status: "success",
         message: `Logout is successful`,
-        data: null,
+        data: {
+          accessToken: "",
+        },
       });
     } catch (err) {
       next(err);

@@ -27,18 +27,6 @@ const userSchema: Schema<IUser> = new Schema<IUser>(
       unique: true,
     },
     password: { type: String, trim: true, required: true, minlength: 6 },
-    accessTokenVersion: {
-      type: Number,
-      default: 0,
-    },
-    resetPasswordTokenVersion: {
-      type: Number,
-      default: 0,
-    },
-    refreshTokenVersion: {
-      type: Number,
-      default: 0,
-    },
   },
   {
     timestamps: true,
@@ -78,20 +66,6 @@ userSchema.statics.findByCredentials = async (
   return user;
 };
 
-userSchema.statics.revokeRefreshToken = async (userId: string) => {
-  await User.findOneAndUpdate(
-    { _id: userId },
-    { $inc: { refreshTokenVersion: 1 } }
-  );
-};
-
-userSchema.statics.revokeAccessToken = async (userId: string) => {
-  await User.findOneAndUpdate(
-    { _id: userId },
-    { $inc: { accessTokenVersion: 1 } }
-  );
-};
-
 userSchema.methods.createAccessToken = function (
   this: IUser,
   expires: string | undefined = undefined
@@ -102,15 +76,6 @@ userSchema.methods.createAccessToken = function (
     expires ? { expiresIn: expires } : undefined
   );
   return accessToken;
-};
-
-userSchema.methods.createRefreshToken = function (this: IUser): string {
-  const refreshToken: string = sign(
-    { userId: this._id.toString(), tokenVersion: this.refreshTokenVersion },
-    keys.JWT_REFRESH_TOKEN_SECRET,
-    { expiresIn: "7d" }
-  );
-  return refreshToken;
 };
 
 userSchema.pre<IUser>(

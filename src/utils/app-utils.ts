@@ -15,8 +15,3 @@ export const shouldCompress = (req: Request, res: Response) => {
 
   return compression.filter(req, res);
 };
-
-export const passRes = (_: Request, res: Response, next: NextFunction) => {
-  authServiceInstance.res = res;
-  next();
-};

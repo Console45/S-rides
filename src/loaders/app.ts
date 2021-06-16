@@ -7,7 +7,6 @@ import cookieParser from "cookie-parser";
 import morgan from "morgan";
 import {
   stream,
-  passRes,
   shouldCompress,
   AppRouter,
   apiErrorHandler,
@@ -18,7 +17,7 @@ export const appLoader = async ({ app }: { app: Application }) => {
   /**
    * Middlewares
    */
-  app.use(cors());
+  app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
   app.use(hpp());
   app.use(helmet());
   app.use(morgan("combined", { stream }));
@@ -26,7 +25,6 @@ export const appLoader = async ({ app }: { app: Application }) => {
   app.use(compression({ filter: shouldCompress }));
   app.use(json());
   app.use(urlencoded({ extended: false }));
-  app.use(passRes);
 
   /**
    * Routes

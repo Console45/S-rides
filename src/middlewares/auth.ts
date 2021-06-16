@@ -8,8 +8,8 @@ export const auth = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    console.log(req.cookies);
-    const user = await authServiceInstance.checkAuth(req.cookies.atk);
+    const token: string = req.header("Authorization")!.replace("Bearer ", "");
+    const user = await authServiceInstance.checkAuth(token);
     req.user = user;
     next();
   } catch (err) {
