@@ -16,6 +16,7 @@ const ticketSchema: Schema<ITicket> = new Schema(
     seatNo: { type: String, required: true },
     from: { type: String, required: true },
     to: { type: String, required: true },
+    date: { type: String, required: true },
     user: { ref: User, type: SchemaTypes.ObjectId },
   },
   { timestamps: true }

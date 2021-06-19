@@ -40,7 +40,7 @@ class UserController {
     }
   }
 
-  @get("/tickets")
+  @get("/me/tickets")
   @use(auth)
   async handleGetUsersTickets(req: any, res: Response, next: NextFunction) {
     try {

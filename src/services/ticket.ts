@@ -1,18 +1,13 @@
 import { ApiError } from "./../utils/api-error";
-import { USER_MODEL_TOKEN } from "./../models/User";
-import { IUserModel, IUser, ITicketModel, ITicket } from "../@types";
+import { ITicketModel, ITicket } from "../@types";
 import { Container, Inject, Service } from "typedi";
 import { TICKET_MODEL_TOKEN } from "../models/Ticket";
 
 @Service()
 class TicketService {
-  private readonly userModel: IUserModel;
   private readonly ticketModel: ITicketModel;
-  constructor(
-    @Inject(USER_MODEL_TOKEN) userModel: IUserModel,
-    @Inject(TICKET_MODEL_TOKEN) ticketModel: ITicketModel
-  ) {
-    (this.userModel = userModel), (this.ticketModel = ticketModel);
+  constructor(@Inject(TICKET_MODEL_TOKEN) ticketModel: ITicketModel) {
+    this.ticketModel = ticketModel;
   }
 
   /**
