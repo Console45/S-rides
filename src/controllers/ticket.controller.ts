@@ -5,7 +5,7 @@ import { NextFunction, Response } from "express";
 
 @controller("/tickets")
 class TicketController {
-  @post("/order")
+  @post("/generate")
   @use(auth)
   async handleOrderTicket(req: any, res: Response, next: NextFunction) {
     try {
