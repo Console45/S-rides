@@ -1,5 +1,5 @@
 import { auth } from "./../middlewares/auth";
-import { controller, get, post, use } from "../decorators";
+import { controller, post, use } from "../decorators";
 import { ticketServiceInsatance } from "../services/ticket";
 import { NextFunction, Response } from "express";
 
