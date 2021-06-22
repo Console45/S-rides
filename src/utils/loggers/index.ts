@@ -1,6 +1,5 @@
 import path from "path";
 import fs from "fs";
-import "winston-mongodb";
 import { format, transports, Logger, createLogger } from "winston";
 
 export const logsDir = path.join(__dirname, "../../../", "logs");
