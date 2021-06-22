@@ -17,7 +17,7 @@ export const appLoader = async ({ app }: { app: Application }) => {
   /**
    * Middlewares
    */
-  app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+  app.use(cors({ origin: "*" }));
   app.use(hpp());
   app.use(helmet());
   app.use(morgan("combined", { stream }));
