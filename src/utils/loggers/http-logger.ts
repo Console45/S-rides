@@ -1,9 +1,5 @@
 import { transports } from "winston";
-import {
-  consoleTransportStreamOptons,
-  logger,
-  mongodbTransportStreamOptions,
-} from ".";
+import { consoleTransportStreamOptons, logger } from ".";
 
 export const httpLogger = logger({ filename: "http.log", level: "http" });
 
@@ -16,9 +12,3 @@ export const stream = {
     httpLogger.http(message);
   },
 };
-
-if (process.env.NODE_ENV === "production") {
-  httpLogger.add(
-    new transports.MongoDB(mongodbTransportStreamOptions("http_logs"))
-  );
-}

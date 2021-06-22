@@ -44,8 +44,7 @@
     "reflect-metadata": "^0.1.13",
     "typedi": "^0.10.0",
     "validator": "^13.5.2",
-    "winston": "^3.3.3",
-    "winston-mongodb": "^5.0.7"
+    "winston": "^3.3.3"
   },
   "scripts": {
     "clean": "rm -rf ./dist",
